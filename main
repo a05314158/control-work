@@ -1,0 +1,93 @@
+import tkinter as tk
+
+class Circle:
+    def __init__(self, canvas, x, y, r, color):
+        self.canvas = canvas
+        self.x = x
+        self.y = y
+        self.r = r
+        self.color = color
+
+    def calculate_area(self):
+        return 3.14159 * self.r**2
+
+    def display(self):
+        x1 = self.x - self.r
+        y1 = self.y - self.r
+        x2 = self.x + self.r
+        y2 = self.y + self.r
+        self.canvas.create_oval(x1, y1, x2, y2, outline='black', fill=self.color, width=2)
+        self.canvas.create_text(self.x, self.y, text=f"Площадь: {self.calculate_area()}")
+
+class Rectangle:
+    def __init__(self, canvas, x, y, width, height, color):
+        self.canvas = canvas
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.color = color
+
+    def calculate_area(self):
+        return self.width * self.height
+
+    def display(self):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        self.canvas.create_rectangle(x1, y1, x2, y2, outline='black', fill=self.color, width=2)
+        self.canvas.create_text((x1 + x2) // 2, (y1 + y2) // 2, text=f"Площадь: {self.calculate_area()}")
+
+def create_circle():
+    x = int(entry_circle_x.get())
+    y = int(entry_circle_y.get())
+    r = int(entry_circle_r.get())
+    color = entry_circle_color.get()
+    circle = Circle(canvas, x, y, r, color)
+    circle.display()
+
+def create_rectangle():
+    x = int(entry_rect_x.get())
+    y = int(entry_rect_y.get())
+    width = int(entry_rect_width.get())
+    height = int(entry_rect_height.get())
+    color = entry_rect_color.get()
+    rectangle = Rectangle(canvas, x, y, width, height, color)
+    rectangle.display()
+
+root = tk.Tk()
+root.title("Рисование фигур")
+
+canvas = tk.Canvas(root, width=400, height=400)
+canvas.pack()
+
+label_circle = tk.Label(root, text="Круг (x, y, r, color):")
+label_circle.pack()
+entry_circle_x = tk.Entry(root)
+entry_circle_x.pack()
+entry_circle_y = tk.Entry(root)
+entry_circle_y.pack()
+entry_circle_r = tk.Entry(root)
+entry_circle_r.pack()
+entry_circle_color = tk.Entry(root)
+entry_circle_color.pack()
+button_circle = tk.Button(root, text="Создать круг", command=create_circle)
+button_circle.pack()
+
+label_rect = tk.Label(root, text="Прямоугольник (x, y, width, height, color):")
+label_rect.pack()
+entry_rect_x = tk.Entry(root)
+entry_rect_x.pack()
+entry_rect_y = tk.Entry(root)
+entry_rect_y.pack()
+entry_rect_width = tk.Entry(root)
+entry_rect_width.pack()
+entry_rect_height = tk.Entry(root)
+entry_rect_height.pack()
+entry_rect_color = tk.Entry(root)
+entry_rect_color.pack()
+button_rect = tk.Button(root, text="Создать прямоугольник", command=create_rectangle)
+button_rect.pack()
+
+root.mainloop()
